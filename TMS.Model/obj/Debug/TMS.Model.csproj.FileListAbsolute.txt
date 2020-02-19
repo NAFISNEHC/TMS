@@ -1,0 +1,6 @@
+D:\WorkSpace\dotNetRepository\TMS\TMS.Model\bin\Debug\TMS.Model.dll
+D:\WorkSpace\dotNetRepository\TMS\TMS.Model\bin\Debug\TMS.Model.pdb
+D:\WorkSpace\dotNetRepository\TMS\TMS.Model\obj\Debug\TMS.Model.csprojAssemblyReference.cache
+D:\WorkSpace\dotNetRepository\TMS\TMS.Model\obj\Debug\TMS.Model.csproj.CoreCompileInputs.cache
+D:\WorkSpace\dotNetRepository\TMS\TMS.Model\obj\Debug\TMS.Model.dll
+D:\WorkSpace\dotNetRepository\TMS\TMS.Model\obj\Debug\TMS.Model.pdb

@@ -1,0 +1,289 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Home</title>
+    <!-- plugins:css -->
+    <link rel="stylesheet" href="~/Content/vendors/iconfonts/mdi/css/materialdesignicons.min.css">
+    <link rel="stylesheet" href="~/Content/vendors/css/vendor.bundle.base.css">
+    <!-- endinject -->
+    <!-- inject:css -->
+    <link rel="stylesheet" href="~/Content/css/style.css">
+    <!-- endinject -->
+    <link rel="shortcut icon" href="~/Content/images/favicon.png" />
+    <script src="~/Scripts/jquery-3.3.1.js"></script>
+    <script type="text/javascript">
+        window.onload = function () {
+            var tools = @Html.Raw(Json.Encode(ViewBag.tools));
+            var color = new Array('success', 'danger', 'warning', 'primary', 'info');
+            var count = new Array('0%', '20%', '40%', '60%', '80%', '100%');
+            var enlity = @Html.Raw(Json.Encode(ViewBag.enlity));
+            for (var i = 0; i < tools.length; i++) {
+                str = color[i % 5];
+                num = count[tools[i].UPL];
+                $("#tb1").append("<tr><td> " + tools[i].Code + "</td><td>" + tools[i].Name + "</td><td>" + tools[i].Famliy + "</td><td>" + tools[i].Model + "</td><td>" + tools[i].PartNo + "</td></tr>");
+                $("#tb2").append("<tr><td> " + tools[i].Code + "</td><td>" + tools[i].Name + "</td><td>" + tools[i].UsedFor + "</td><td><div class='progress'><div class='progress-bar bg-"+ str +"' role='progressbar' style='width:" + num +"' aria-valuenow='75' aria-valuemin='0' aria-valuemax='100'></div></div></td><td>" + tools[i].UPL + "</td></tr>");
+                $("#tb4").append("<tr><td> " + tools[i].Code + "</td><td>" + tools[i].Name + "</td><td>" + tools[i].Owner + "</td><td>" + tools[i].PMPeriod + "</td><td>" + formatDate(tools[i].RecOn) + "</td><td>" + tools[i].RecBy + "</td><td>" + formatDate(tools[i].EditOn) + "</td><td>" + tools[i].EditBy + "</td></tr>");
+            }
+            for (var i = 0; i < enlity.length; i++) {
+                for (var j = 0; j < enlity[i].length; j++) {
+                    $("#tb3").append("<tr><td> " + enlity[i][j].Code + "</td><td>" + enlity[i][j].SeqID + "</td><td>" + enlity[i][j].BillNo + "</td><td>" + formatDate(enlity[i][j].RegData) + "</td><td>" + enlity[i][j].UsedCount + "</td><td>" + enlity[i][j].Location +"</td></tr>");
+                }
+            }
+        }
+        function formatDate(NewDtime) {
+            var dt = new Date(parseInt(NewDtime.slice(6, 19)));
+            var year = dt.getFullYear();
+            var month = dt.getMonth() + 1;
+            var date = dt.getDate();
+            var hour = dt.getHours();
+            var minute = dt.getMinutes();
+            var second = dt.getSeconds();
+            return year + "-" + month + "-" + date + " " + hour + ":" + minute + ":" + second;
+        }
+    </script>
+</head>
+<body>
+    <div class="container-scroller">
+        <!-- partial:partials/_navbar.html -->
+        <nav class="navbar default-layout-navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
+            <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
+                <a class="navbar-brand brand-logo"><img src="~/Content/images/logo.png" alt="logo" /><span>Jabil TMS</span></a>
+                <a class="navbar-brand brand-logo-mini"><img src="~/Content/images/logo-mini.svg" alt="logo" /></a>
+            </div>
+            <div class="navbar-menu-wrapper d-flex align-items-stretch">
+                <div class="search-field d-none d-md-block">
+                    <form class="d-flex align-items-center h-100" action="#">
+                        <div class="input-group">
+                            <div class="input-group-prepend bg-transparent">
+                                <i class="input-group-text border-0 mdi mdi-magnify"></i>
+                            </div>
+                            <input type="text" class="form-control bg-transparent border-0" placeholder="Search projects">
+                        </div>
+                    </form>
+                </div>
+                <ul class="navbar-nav navbar-nav-right">
+                    <li class="nav-item nav-profile dropdown">
+                        <a class="nav-link dropdown-toggle" id="profileDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
+                            <div class="nav-profile-img">
+                                <img src="~/Content/images/faces/f1.jpg" alt="image" id="face">
+                                <span class="availability-status online"></span>
+                            </div>
+                            <div class="nav-profile-text">
+                                <p class="mb-1 text-black">@ViewBag.user.UserName</p>
+                            </div>
+                        </a>
+                        <div class="dropdown-menu navbar-dropdown" aria-labelledby="profileDropdown">
+                            <a class="dropdown-item" href="/Login/Index">
+                                <i class="mdi mdi-logout mr-2 text-primary"></i>
+                                Signout
+                            </a>
+                        </div>
+                    </li>
+                    
+            </div>
+        </nav>
+        <!-- partial -->
+        <div class="container-fluid page-body-wrapper">
+            <!-- partial:partials/_sidebar.html -->
+            <nav class="sidebar sidebar-offcanvas" id="sidebar">
+                <ul class="nav">
+                    <li class="nav-item nav-profile">
+                        <a href="#" class="nav-link">
+                            <div class="nav-profile-image">
+                                <img src="~/Content/images/faces/f1.jpg" alt="profile">
+                                <span class="login-status online"></span> <!--change to offline or busy as needed-->
+                            </div>
+                            <div class="nav-profile-text d-flex flex-column">
+                                <span class="font-weight-bold mb-2">@ViewBag.user.UserOpt</span>
+                                <span class="text-secondary text-small">@ViewBag.user.WorkCell</span>
+                            </div>
+                            <i class="mdi mdi-bookmark-check text-success nav-profile-badge"></i>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/Home/Index">
+                            <span class="menu-title">所有夹具</span>
+                            <i class="mdi mdi-home menu-icon"></i>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
+                            <span class="menu-title">进出库</span>
+                            <i class="menu-arrow"></i>
+                            <i class="mdi mdi-crosshairs-gps menu-icon"></i>
+                        </a>
+                        <div class="collapse" id="ui-basic">
+                            <ul class="nav flex-column sub-menu">
+                                <li class="nav-item"> <a class="nav-link" href="#">入库</a></li>
+                                <li class="nav-item"> <a class="nav-link" href="#">出库</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            <span class="menu-title">报修申请</span>
+                            <i class="mdi mdi-contacts menu-icon"></i>
+                        </a>
+                    </li>
+
+                    
+                </ul>
+            </nav>
+            <!-- partial -->
+            <div class="main-panel">
+                <div class="content-wrapper">
+                    <div class="page-header">
+                        <h3 class="page-title">
+                            <span class="page-title-icon bg-gradient-primary text-white mr-2">
+                                <i class="mdi mdi-home"></i>
+                            </span>
+                            All fixtures
+                        </h3>
+                        <nav aria-label="breadcrumb">
+                            <ul class="breadcrumb">
+                                <li class="breadcrumb-item active" aria-current="page">
+                                    <span></span>Overview
+                                    <i class="mdi mdi-alert-circle-outline icon-sm text-primary align-middle"></i>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-6 grid-margin stretch-card">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h4 class="card-title">夹具信息</h4>
+                                    <p class="card-description">
+                                        @ViewBag.user.WorkCell
+                                    </p>
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>Code</th>
+                                                <th>Name</th>
+                                                <th>Family</th>
+                                                <th>Model</th>
+                                                <th>PartNo</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="tb1"></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-6 grid-margin stretch-card">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h4 class="card-title">用途介绍</h4>
+                                    <p class="card-description">
+                                        @ViewBag.user.WorkCell
+                                    </p>
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>Code</th>
+                                                <th>Name</th>
+                                                <th>UsedFor</th>
+                                                <th>UPL-p</th>
+                                                <th>UPL</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="tb2"></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-6 grid-margin stretch-card">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h4 class="card-title">相关人员</h4>
+                                    <p class="card-description">
+                                        @ViewBag.user.WorkCell
+                                    </p>
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>Code</th>
+                                                <th>Name</th>
+                                                <th>Owner</th>
+                                                <th>PMPeriod</th>
+                                                <th>RecOn</th>
+                                                <th>RecBt</th>
+                                                <th>EditOn</th>
+                                                <th>EditBy</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="tb4"></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-6 grid-margin stretch-card">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h4 class="card-title">夹具列表</h4>
+                                    <p class="card-description">
+                                        @ViewBag.user.WorkCell
+                                    </p>
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>Code</th>
+                                                <th>SeqId</th>
+                                                <th>BillNo</th>
+                                                <th>RegData</th>
+                                                <th>UseCount</th>
+                                                <th>Location</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="tb3"></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- content-wrapper ends -->
+                <!-- partial:partials/_footer.html -->
+                <footer class="footer">
+                    <div class="d-sm-flex justify-content-center justify-content-sm-between">
+                        <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright &copy; 20179350126软件一班陈思帆</span>
+                    </div>
+                </footer>
+                <!-- partial -->
+            </div>
+            <!-- main-panel ends -->
+        </div>
+        <!-- page-body-wrapper ends -->
+    </div>
+    <!-- container-scroller -->
+    <!-- plugins:js -->
+    <script src="~/Content/vendors/js/vendor.bundle.base.js"></script>
+    <script src="~/Content/vendors/js/vendor.bundle.addons.js"></script>
+    <!-- endinject -->
+    <!-- Plugin js for this page-->
+    <!-- End plugin js for this page-->
+    <!-- inject:js -->
+    <script src="~/Content/js/off-canvas.js"></script>
+    <script src="~/Content/js/misc.js"></script>
+    <!-- endinject -->
+    <!-- Custom js for this page-->
+    <script src="~/Content/js/dashboard.js"></script>
+    <!-- End custom js for this page-->
+</body>
+
+</html>
+

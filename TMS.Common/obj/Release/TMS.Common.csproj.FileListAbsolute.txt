@@ -1,0 +1,6 @@
+D:\WorkSpace\dotNetRepository\TMS\TMS.Common\bin\Release\TMS.Common.dll
+D:\WorkSpace\dotNetRepository\TMS\TMS.Common\bin\Release\TMS.Common.pdb
+D:\WorkSpace\dotNetRepository\TMS\TMS.Common\obj\Release\TMS.Common.csprojAssemblyReference.cache
+D:\WorkSpace\dotNetRepository\TMS\TMS.Common\obj\Release\TMS.Common.csproj.CoreCompileInputs.cache
+D:\WorkSpace\dotNetRepository\TMS\TMS.Common\obj\Release\TMS.Common.dll
+D:\WorkSpace\dotNetRepository\TMS\TMS.Common\obj\Release\TMS.Common.pdb

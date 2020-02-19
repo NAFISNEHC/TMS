@@ -1,0 +1,222 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Home</title>
+    <!-- plugins:css -->
+    <link rel="stylesheet" href="~/Content/vendors/iconfonts/mdi/css/materialdesignicons.min.css">
+    <link rel="stylesheet" href="~/Content/vendors/css/vendor.bundle.base.css">
+    <!-- endinject -->
+    <!-- inject:css -->
+    <link rel="stylesheet" href="~/Content/css/style.css">
+    <!-- endinject -->
+    <link rel="shortcut icon" href="~/Content/images/favicon.png" />
+    <script src="~/Scripts/jquery-3.3.1.js"></script>
+    <script type="text/javascript">
+        window.onload = function () {
+            var op = @Html.Raw(Json.Encode(ViewBag.op));
+            var pl = @Html.Raw(Json.Encode(ViewBag.pl));
+            for (var i = 0; i < pl.length; i++) {
+                $("#s1").append("<option>" + pl[i].pl + "</option>")
+            }
+            for (var i = 0; i < op.length; i++) {
+                $("#tb1").append("<tr><td>" + "<input type='radio' id='checkAll' name='checkAll' />" +"</td><td> " + op[i].Code + "</td><td>" + op[i].Famliy + "</td><td>" + op[i].Name + "</td><td>" + op[i].BillNo + "</td><td>" + op[i].Model + "</td><td>" + op[i].Location + "</td></tr>");
+            }
+            $("#all").click(function () {
+                window.location.href = '@Url.Action("Index","Home",ViewBag.user)';
+            });
+            $("#output").click(function () {
+                window.location.href = '@Url.Action("Storeroom","Home",ViewBag.user)';
+            });
+        }
+
+        function formatDate(NewDtime) {
+            var dt = new Date(parseInt(NewDtime.slice(6, 19)));
+            var year = dt.getFullYear();
+            var month = dt.getMonth() + 1;
+            var date = dt.getDate();
+            var hour = dt.getHours();
+            var minute = dt.getMinutes();
+            var second = dt.getSeconds();
+            return year + "-" + month + "-" + date + " " + hour + ":" + minute + ":" + second;
+        }
+    </script>
+</head>
+<body>
+    <div class="container-scroller">
+        <!-- partial:partials/_navbar.html -->
+        <nav class="navbar default-layout-navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
+            <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
+                <a class="navbar-brand brand-logo"><img src="~/Content/images/logo.png" alt="logo" /><span>Jabil TMS</span></a>
+                <a class="navbar-brand brand-logo-mini"><img src="~/Content/images/logo-mini.svg" alt="logo" /></a>
+            </div>
+            <div class="navbar-menu-wrapper d-flex align-items-stretch">
+                <div class="search-field d-none d-md-block">
+                    <form class="d-flex align-items-center h-100" action="#">
+                        <div class="input-group">
+                            <div class="input-group-prepend bg-transparent">
+                                <i class="input-group-text border-0 mdi mdi-magnify"></i>
+                            </div>
+                            <input type="text" class="form-control bg-transparent border-0" placeholder="Search projects">
+                        </div>
+                    </form>
+                </div>
+                <ul class="navbar-nav navbar-nav-right">
+                    <li class="nav-item nav-profile dropdown">
+                        <a class="nav-link dropdown-toggle" id="profileDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
+                            <div class="nav-profile-img">
+                                <img src="~/Content/images/faces/f1.jpg" alt="image" id="face">
+                                <span class="availability-status online"></span>
+                            </div>
+                            <div class="nav-profile-text">
+                                <p class="mb-1 text-black">@ViewBag.user.UserName</p>
+                            </div>
+                        </a>
+                        <div class="dropdown-menu navbar-dropdown" aria-labelledby="profileDropdown">
+                            <a class="dropdown-item" href="/Login/Index">
+                                <i class="mdi mdi-logout mr-2 text-primary"></i>
+                                Signout
+                            </a>
+                        </div>
+                    </li>
+
+            </div>
+        </nav>
+        <!-- partial -->
+        <div class="container-fluid page-body-wrapper">
+            <!-- partial:partials/_sidebar.html -->
+            <nav class="sidebar sidebar-offcanvas" id="sidebar">
+                <ul class="nav">
+                    <li class="nav-item nav-profile">
+                        <a href="#" class="nav-link">
+                            <div class="nav-profile-image">
+                                <img src="~/Content/images/faces/f1.jpg" alt="profile">
+                                <span class="login-status online"></span> <!--change to offline or busy as needed-->
+                            </div>
+                            <div class="nav-profile-text d-flex flex-column">
+                                <span class="font-weight-bold mb-2">@ViewBag.user.UserOpt</span>
+                                <span class="text-secondary text-small">@ViewBag.user.WorkCell</span>
+                            </div>
+                            <i class="mdi mdi-bookmark-check text-success nav-profile-badge"></i>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" id="all">
+                            <span class="menu-title">所有夹具</span>
+                            <i class="mdi mdi-home menu-icon"></i>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
+                            <span class="menu-title">进出库</span>
+                            <i class="menu-arrow"></i>
+                            <i class="mdi mdi-crosshairs-gps menu-icon"></i>
+                        </a>
+                        <div class="collapse" id="ui-basic">
+                            <ul class="nav flex-column sub-menu">
+                                <li class="nav-item"> <a class="nav-link" href="#" id="output">出库</a></li>
+                                <li class="nav-item"> <a class="nav-link" href="#">入库</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            <span class="menu-title">报修申请</span>
+                            <i class="mdi mdi-contacts menu-icon"></i>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            <!-- partial -->
+            <div class="main-panel">
+                <div class="content-wrapper">
+                    <div class="page-header">
+                        <h3 class="page-title">
+                            <span class="page-title-icon bg-gradient-primary text-white mr-2">
+                                <i class="mdi mdi-home"></i>
+                            </span>
+                            Input
+                        </h3>
+                        <nav aria-label="breadcrumb">
+                            <ul class="breadcrumb">
+                                <li class="breadcrumb-item active" aria-current="page">
+                                    <span></span>Overview
+                                    <i class="mdi mdi-alert-circle-outline icon-sm text-primary align-middle"></i>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-6 grid-margin stretch-card">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h4 class="card-title">夹具列表</h4>
+                                    <p class="card-description">
+                                        @ViewBag.user.WorkCell
+                                    </p>
+                                    <div class="col-md-6">
+                                        <div class="form-group row">
+                                            <label class="col-sm-3 col-form-label">Production Line</label>
+                                            <div class="col-sm-9">
+                                                <select class="form-control" id="s1"></select>
+                                            </div>
+                                            <button type="button" class="btn btn-gradient-primary" style="height:40px;">入库</button>
+                                        </div>
+
+                                    </div>
+
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th></th>
+                                                <th>Code</th>
+                                                <th>Famliy</th>
+                                                <th>Name</th>
+                                                <th>BillNo</th>
+                                                <th>Model</th>
+                                                <th>Location</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="tb1"></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- content-wrapper ends -->
+                    <!-- partial:partials/_footer.html -->
+                    <footer class="footer">
+                        <div class="d-sm-flex justify-content-center justify-content-sm-between">
+                            <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright &copy; 20179350126软件一班陈思帆</span>
+                        </div>
+                    </footer>
+                    <!-- partial -->
+                </div>
+                <!-- main-panel ends -->
+            </div>
+            <!-- page-body-wrapper ends -->
+        </div>
+        <!-- container-scroller -->
+        <!-- plugins:js -->
+        <script src="~/Content/vendors/js/vendor.bundle.base.js"></script>
+        <script src="~/Content/vendors/js/vendor.bundle.addons.js"></script>
+        <!-- endinject -->
+        <!-- Plugin js for this page-->
+        <!-- End plugin js for this page-->
+        <!-- inject:js -->
+        <script src="~/Content/js/off-canvas.js"></script>
+        <script src="~/Content/js/misc.js"></script>
+        <!-- endinject -->
+        <!-- Custom js for this page-->
+        <script src="~/Content/js/dashboard.js"></script>
+        <!-- End custom js for this page-->
+</body>
+
+</html>
+
